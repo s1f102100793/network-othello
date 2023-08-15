@@ -3,7 +3,6 @@ import { useAtom } from 'jotai';
 import type { ChangeEvent, FormEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { Loading } from 'src/components/Loading/Loading';
-import { BasicHeader } from 'src/pages/@components/BasicHeader/BasicHeader';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
 import { userAtom } from '../atoms/user';
@@ -13,6 +12,18 @@ const Home = () => {
   const [user] = useAtom(userAtom);
   const [tasks, setTasks] = useState<TaskModel[]>();
   const [label, setLabel] = useState('');
+  const [board, setBoard] = useState([
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 1, 2, 0, 0, 0],
+    [0, 0, 0, 2, 1, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
+  const [turnColor, setTurnColor] = useState(1);
+
   const inputLabel = (e: ChangeEvent<HTMLInputElement>) => {
     setLabel(e.target.value);
   };
@@ -38,6 +49,19 @@ const Home = () => {
     await fetchTasks();
   };
 
+  const createBoard = async (x: number, y: number, turn: number) => {
+    const a = await apiClient.board.post({ body: { board, x, y, turn } });
+    console.log(a.body);
+    setBoard(a.body);
+    setTurnColor(3 - turnColor);
+  };
+
+  const resetBoard = async () => {
+    const b = await apiClient.newboard.post({ body: { board } });
+    console.log(b.body);
+    setBoard(b.body);
+  };
+
   useEffect(() => {
     fetchTasks();
   }, []);
@@ -45,33 +69,29 @@ const Home = () => {
   if (!tasks || !user) return <Loading visible />;
 
   return (
-    <>
-      <BasicHeader user={user} />
-      <div className={styles.title} style={{ marginTop: '160px' }}>
-        Welcome to frourio!
+    <div className={styles.container}>
+      <div className={styles.board}>
+        {board.map((row, y) =>
+          row.map((color, x) => (
+            <div
+              key={`${x}-${y}`}
+              className={styles.cell}
+              onClick={() => createBoard(x, y, turnColor)}
+            >
+              {color !== 0 && (
+                <div
+                  className={styles.stone}
+                  style={{
+                    background: color === 3 ? '#adff2f' : color === 1 ? '#000' : '#fff',
+                  }}
+                />
+              )}
+            </div>
+          ))
+        )}
       </div>
-
-      <form style={{ textAlign: 'center', marginTop: '80px' }} onSubmit={createTask}>
-        <input value={label} type="text" onChange={inputLabel} />
-        <input type="submit" value="ADD" />
-      </form>
-      <ul className={styles.tasks}>
-        {tasks.map((task) => (
-          <li key={task.id}>
-            <label>
-              <input type="checkbox" checked={task.done} onChange={() => toggleDone(task)} />
-              <span>{task.label}</span>
-            </label>
-            <input
-              type="button"
-              value="DELETE"
-              className={styles.deleteBtn}
-              onClick={() => deleteTask(task)}
-            />
-          </li>
-        ))}
-      </ul>
-    </>
+      <button className={styles.button} onClick={resetBoard} />
+    </div>
   );
 };
 
