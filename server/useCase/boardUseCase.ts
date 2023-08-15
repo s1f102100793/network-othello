@@ -5,10 +5,10 @@ export type BoardArr = number[][];
 let board: BoardArr = [
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
-  [0, 0, 0, 1, 2, 0, 0, 0],
-  [0, 0, 0, 2, 1, 0, 0, 0],
-  [0, 0, 0, 0, 0, 0, 0, 0],
+  [0, 0, 0, 0, 3, 0, 0, 0],
+  [0, 0, 0, 1, 2, 3, 0, 0],
+  [0, 0, 3, 2, 1, 0, 0, 0],
+  [0, 0, 0, 3, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
 ];
@@ -29,7 +29,8 @@ const directions: number[][] = [
 export const boardUseCace = {
   getBoard: () => board,
   clickBoard: (params: { x: number; y: number; turn: number }, userId: UserId) => {
-    console.log('111', Math.random(), userId);
+    let pass = 0;
+    let turn = params.turn;
     const clearNewBoard = () => {
       for (let y = 0; y < 8; y++) {
         for (let x = 0; x < 8; x++) {
@@ -97,11 +98,47 @@ export const boardUseCace = {
         }
       }
     };
+
+    const countCandidates = () => {
+      let candidate = 0;
+      for (let y = 0; y < 8; y++) {
+        for (let x = 0; x < 8; x++) {
+          if (board[y][x] === 3) {
+            candidate++;
+          }
+        }
+      }
+      return candidate;
+    };
+
+    const handlePass = () => {
+      console.log('パス');
+      pass++;
+      alert('パスです');
+      for (let y = 0; y < 8; y++) {
+        for (let x = 0; x < 8; x++) {
+          changeBoard(x, y, false, params.turn);
+        }
+      }
+      turn = 3 - params.turn;
+    };
+
+    const Pass = () => {
+      const candidate = countCandidates();
+      if (candidate !== 0) {
+        console.log('ゲーム続行');
+        pass = 0;
+        turn = params.turn;
+      } else {
+        handlePass();
+      }
+    };
     clearNewBoard();
     changeBoard(params.x, params.y, true, params.turn);
     updateBoard(3 - params.turn);
+    Pass();
     // board[params.y][params.x] = params.turn;
-    return board;
+    return { board, turn };
   },
 
   resetBoard: () => {

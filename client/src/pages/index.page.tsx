@@ -1,18 +1,11 @@
-import type { TaskModel } from 'commonTypesWithClient/models';
-import { useAtom } from 'jotai';
-import type { ChangeEvent, FormEvent } from 'react';
 import { useEffect, useState } from 'react';
-import { Loading } from 'src/components/Loading/Loading';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
-import { userAtom } from '../atoms/user';
+import type { BoardArr } from '../../../server/useCase/boardUseCase';
 import styles from './index.module.css';
 
 const Home = () => {
-  const [user] = useAtom(userAtom);
-  const [tasks, setTasks] = useState<TaskModel[]>();
-  const [label, setLabel] = useState('');
-  const [board, setBoard] = useState([
+  const [board, setBoard] = useState<BoardArr>([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 3, 0, 0, 0],
@@ -24,51 +17,31 @@ const Home = () => {
   ]);
   const [turnColor, setTurnColor] = useState(1);
 
-  const inputLabel = (e: ChangeEvent<HTMLInputElement>) => {
-    setLabel(e.target.value);
-  };
-  const fetchTasks = async () => {
-    const tasks = await apiClient.tasks.$get().catch(returnNull);
+  const fetchBoard = async () => {
+    const board = await apiClient.board.$get().catch(returnNull);
 
-    if (tasks !== null) setTasks(tasks);
-  };
-  const createTask = async (e: FormEvent) => {
-    e.preventDefault();
-    if (!label) return;
-
-    await apiClient.tasks.post({ body: { label } });
-    setLabel('');
-    await fetchTasks();
-  };
-  const toggleDone = async (task: TaskModel) => {
-    await apiClient.tasks._taskId(task.id).patch({ body: { done: !task.done } });
-    await fetchTasks();
-  };
-  const deleteTask = async (task: TaskModel) => {
-    await apiClient.tasks._taskId(task.id).delete();
-    await fetchTasks();
+    if (board !== null) setBoard(board);
   };
 
   const createBoard = async (x: number, y: number, turn: number) => {
     if (board[y][x] === 3) {
       const a = await apiClient.board.post({ body: { board, x, y, turn } });
-      console.log(a.body);
-      setBoard(a.body);
-      setTurnColor(3 - turnColor);
+      console.log(a.body.board);
+      setBoard(a.body.board);
+      setTurnColor(3 - a.body.turn);
     }
   };
 
   const resetBoard = async () => {
     const b = await apiClient.newboard.post({ body: { board } });
-    console.log(b.body);
+    console.log(b);
     setBoard(b.body);
+    setTurnColor(1);
   };
 
   useEffect(() => {
-    fetchTasks();
+    fetchBoard();
   }, []);
-
-  if (!tasks || !user) return <Loading visible />;
 
   return (
     <div className={styles.container}>
