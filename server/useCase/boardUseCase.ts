@@ -114,7 +114,6 @@ export const boardUseCace = {
     const handlePass = () => {
       console.log('パス');
       pass++;
-      alert('パスです');
       for (let y = 0; y < 8; y++) {
         for (let x = 0; x < 8; x++) {
           changeBoard(x, y, false, params.turn);

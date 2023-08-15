@@ -43,6 +43,23 @@ const Home = () => {
     fetchBoard();
   }, []);
 
+  const countCandidates = () => {
+    let candidate = 0;
+    for (let y = 0; y < 8; y++) {
+      for (let x = 0; x < 8; x++) {
+        if (board[y][x] === 3) {
+          candidate++;
+        }
+      }
+    }
+    return candidate;
+  };
+
+  const candidate = countCandidates();
+  if (candidate === 0) {
+    alert('ゲーム終了');
+  }
+
   return (
     <div className={styles.container}>
       <div className={styles.board}>
