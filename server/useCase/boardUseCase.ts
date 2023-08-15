@@ -1,17 +1,6 @@
-import type { UserId } from '$/commonTypesWithClient/branded';
+import type { UserId } from '../commonTypesWithClient/branded';
 
 export type BoardArr = number[][];
-
-const directions: number[][] = [
-  [-1, -1],
-  [-1, 0],
-  [-1, 1],
-  [0, -1],
-  [0, 1],
-  [1, 1],
-  [1, 0],
-  [1, -1],
-];
 
 let board: BoardArr = [
   [0, 0, 0, 0, 0, 0, 0, 0],
@@ -22,6 +11,17 @@ let board: BoardArr = [
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
   [0, 0, 0, 0, 0, 0, 0, 0],
+];
+
+const directions: number[][] = [
+  [-1, -1],
+  [-1, 0],
+  [-1, 1],
+  [0, -1],
+  [0, 1],
+  [1, 1],
+  [1, 0],
+  [1, -1],
 ];
 
 // const newBoard: number[][] = JSON.parse(JSON.stringify(resetboard));
