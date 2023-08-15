@@ -15,10 +15,10 @@ const Home = () => {
   const [board, setBoard] = useState([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 1, 2, 0, 0, 0],
-    [0, 0, 0, 2, 1, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 3, 0, 0, 0],
+    [0, 0, 0, 1, 2, 3, 0, 0],
+    [0, 0, 3, 2, 1, 0, 0, 0],
+    [0, 0, 0, 3, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
@@ -50,10 +50,12 @@ const Home = () => {
   };
 
   const createBoard = async (x: number, y: number, turn: number) => {
-    const a = await apiClient.board.post({ body: { board, x, y, turn } });
-    console.log(a.body);
-    setBoard(a.body);
-    setTurnColor(3 - turnColor);
+    if (board[y][x] === 3) {
+      const a = await apiClient.board.post({ body: { board, x, y, turn } });
+      console.log(a.body);
+      setBoard(a.body);
+      setTurnColor(3 - turnColor);
+    }
   };
 
   const resetBoard = async () => {
@@ -90,7 +92,9 @@ const Home = () => {
           ))
         )}
       </div>
-      <button className={styles.button} onClick={resetBoard} />
+      <button className={styles.button} onClick={resetBoard}>
+        ゲーム終了
+      </button>
     </div>
   );
 };

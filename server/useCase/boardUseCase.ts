@@ -30,6 +30,13 @@ export const boardUseCace = {
   getBoard: () => board,
   clickBoard: (params: { x: number; y: number; turn: number }, userId: UserId) => {
     console.log('111', Math.random(), userId);
+    const clearNewBoard = () => {
+      for (let y = 0; y < 8; y++) {
+        for (let x = 0; x < 8; x++) {
+          board[y][x] = board[y][x] % 3; // 3 -> 0にしている
+        }
+      }
+    };
     const flipPiece = (
       x: number,
       y: number,
@@ -83,7 +90,16 @@ export const boardUseCace = {
         }
       }
     };
+    const updateBoard = (color: number) => {
+      for (let y = 0; y < 8; y++) {
+        for (let x = 0; x < 8; x++) {
+          changeBoard(x, y, false, color);
+        }
+      }
+    };
+    clearNewBoard();
     changeBoard(params.x, params.y, true, params.turn);
+    updateBoard(3 - params.turn);
     // board[params.y][params.x] = params.turn;
     return board;
   },
@@ -92,10 +108,10 @@ export const boardUseCace = {
     board = [
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
-      [0, 0, 0, 1, 2, 0, 0, 0],
-      [0, 0, 0, 2, 1, 0, 0, 0],
-      [0, 0, 0, 0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 3, 0, 0, 0],
+      [0, 0, 0, 1, 2, 3, 0, 0],
+      [0, 0, 3, 2, 1, 0, 0, 0],
+      [0, 0, 0, 3, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
       [0, 0, 0, 0, 0, 0, 0, 0],
     ];
