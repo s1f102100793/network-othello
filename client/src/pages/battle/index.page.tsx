@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
-import type { BoardArr } from '../../../server/useCase/boardUseCase';
-import styles from './battle/index.module.css';
+import type { BoardArr } from '../../../../server/useCase/boardUseCase';
+import styles from './index.module.css';
 
 const Home = () => {
   const [board, setBoard] = useState<BoardArr>([
