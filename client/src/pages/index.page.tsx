@@ -1,19 +1,24 @@
-// import { userAtom } from 'src/atoms/user';
-// import { BasicHeader } from 'src/pages/@components/BasicHeader/BasicHeader';
 import Link from 'next/link';
 import styles from './index.module.css';
 
 const Home = () => {
-  // const [user] = useAtom(userAtom);
-
   return (
     <>
-      {/* <BasicHeader user={user} /> */}
       <div className={styles.container}>
+        {/* <div className={styles.logo}>OnlineOthello</div>  */}
         <div className={styles.title}>Welcome to OnlineOthello!</div>
-        <Link href="/battle">
-          <button className={styles.battleButton}>バトルページへ</button>
-        </Link>
+        <p className={styles.description}>
+          Dive into the world of strategy with OnlineOthello. Challenge friends or strangers and
+          dominate the board!
+        </p>
+        <div className={styles.buttons}>
+          <Link href="/login">
+            <button className={styles.loginButton}>ログイン</button>
+          </Link>
+          <Link href="/matching">
+            <button className={styles.matchingButton}>マッチングする</button>
+          </Link>
+        </div>
       </div>
     </>
   );

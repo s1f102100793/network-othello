@@ -3,9 +3,15 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  height: calc(100vh - 160px); /* 160px はマージンの値です。 */
+  height: calc(100vh - 160px);
   padding-top: 160px;
 }
+
+/* .logo {
+  font-size: 100px;
+  font-weight: bold;
+  margin-bottom: 20px;
+} */
 
 .title {
   font-size: 80px;
@@ -13,7 +19,32 @@
   font-weight: bold;
 }
 
-.battleButton {
+.description {
+  font-size: 20px;
+  text-align: center;
+  margin-top: 20px;
+  width: 70%;
+}
+
+.buttons {
+  margin-top: 20px;
+}
+
+.loginButton {
+  padding: 10px 20px;
+  margin: 10px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.loginButton {
+  background-color: #007bff;
+  color: white;
+}
+
+.matchingButton {
   padding: 10px 20px;
   margin-top: 20px;
   background-color: #333;
@@ -24,6 +55,8 @@
   transition: background-color 0.3s ease;
 }
 
-.battleButton:hover {
+.battleButton:hover,
+.loginButton:hover,
+.signupButton:hover {
   background-color: #555;
 }
