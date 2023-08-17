@@ -15,7 +15,7 @@ const Home = () => {
           <Link href="/login">
             <button className={styles.loginButton}>ログイン</button>
           </Link>
-          <Link href="/matching">
+          <Link href="/matching/matching">
             <button className={styles.matchingButton}>マッチングする</button>
           </Link>
         </div>
