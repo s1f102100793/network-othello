@@ -1,3 +1,4 @@
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
@@ -109,6 +110,11 @@ const Home = () => {
       <button className={styles.button} onClick={resetBoard}>
         ゲーム終了
       </button>
+      <Link href="/">
+        <button className={styles.homeButton} onClick={resetBoard}>
+          ホームページへ
+        </button>
+      </Link>
     </div>
   );
 };
