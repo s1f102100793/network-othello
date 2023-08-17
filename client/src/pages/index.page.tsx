@@ -15,10 +15,13 @@ const Home = () => {
           <Link href="/login">
             <button className={styles.loginButton}>ログイン</button>
           </Link>
-          <Link href="/matching/matching">
+          <Link href="/matching">
             <button className={styles.matchingButton}>マッチングする</button>
           </Link>
         </div>
+        <Link href="/battle">
+          <button className={styles.matchingButton}>バトル</button>
+        </Link>
       </div>
     </>
   );
