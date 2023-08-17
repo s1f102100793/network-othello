@@ -18,18 +18,39 @@
   gap: 20px; /* 各要素の間隔 */
 }
 
-.matchingButton, .cancelButton {
+.passwordInput {
+  padding: 10px 20px;
+  font-size: 20px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+  max-width: 400px; /* or any desired maximum width */
+}
+
+.matchingButton, .cancelButton, .createRoomButton, .searchRoomButton {
   padding: 15px 30px;
   font-size: 20px;
   border: none;
   cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 400px; /* ensuring consistent button widths */
 }
 
 .matchingButton {
   background-color: #007BFF;
   color: white;
+}
+
+.createRoomButton {
+  background-color: #28a745; /* Green for creation */
+  color: white;
+}
+
+.searchRoomButton {
+  background-color: #ffc107; /* Yellow for search */
+  color: black;
 }
 
 .cancelButton {

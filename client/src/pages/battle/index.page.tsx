@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
@@ -80,6 +81,11 @@ const Home = () => {
   const countsMessage = `ユーザー${turnColor}のターン`;
   // 黒: ${blackCount}, 白: ${whiteCount}`;
 
+  const prismaBoard = async (e: FormEvent) => {
+    e.preventDefault();
+    await apiClient.room.post({ body: { board, turn: turnColor } });
+  };
+
   return (
     <div className={styles.container}>
       <div className={styles.board}>
@@ -115,6 +121,9 @@ const Home = () => {
           ホームページへ
         </button>
       </Link>
+      <button className={styles.homeButton} onClick={prismaBoard}>
+        aaa
+      </button>
     </div>
   );
 };
