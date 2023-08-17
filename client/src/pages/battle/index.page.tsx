@@ -3,6 +3,7 @@ import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
 import type { BoardArr } from '../../../../server/useCase/boardUseCase';
 import styles from './index.module.css';
+import Link from 'next/link';
 
 const Home = () => {
   const [board, setBoard] = useState<BoardArr>([
@@ -109,6 +110,9 @@ const Home = () => {
       <button className={styles.button} onClick={resetBoard}>
         ゲーム終了
       </button>
+      <Link href="/">
+        <button className={styles.homeButton} onClick={resetBoard}>ホームページへ</button>
+      </Link>
     </div>
   );
 };

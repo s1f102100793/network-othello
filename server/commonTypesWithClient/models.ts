@@ -1,4 +1,4 @@
-import type { BoardArr } from '../useCase/boardUseCase';
+import type { JsonValue } from '@prisma/client/runtime/library';
 import type { TaskId, UserId } from './branded';
 
 export type UserModel = {
@@ -16,6 +16,6 @@ export type TaskModel = {
 };
 
 export type RoomModel = {
-  board: BoardArr;
+  board: JsonValue;
   turn: number;
 };
