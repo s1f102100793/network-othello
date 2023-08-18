@@ -6,6 +6,7 @@ import { userAtom } from 'src/atoms/user';
 import { Loading } from 'src/components/Loading/Loading';
 import { apiClient } from 'src/utils/apiClient';
 import styles from './matching.module.css';
+import { returnNull } from 'src/utils/returnNull';
 
 const Matching = () => {
   const [user] = useAtom(userAtom);
@@ -26,12 +27,12 @@ const Matching = () => {
   //   setPassword(e.target.value);
   // };
 
-  // const fetchRoom = async () => {
-  //   const newRoom = await apiClient.room.$get().catch(returnNull);
-  //   if (newRoom !== null) {
-  //     setRoom(newRoom);
-  //   }
-  // };
+  const fetchRoom = async () => {
+    const newRoom = await apiClient.room.$get().catch(returnNull);
+    if (newRoom !== null) {
+      setRoom(newRoom);
+    }
+  };
 
   if (user === null) return <Loading visible />;
   const createRoom = async () => {
@@ -56,10 +57,11 @@ const Matching = () => {
           // onChange={handlePasswordChange}
           className={styles.passwordInput}
         /> */}
-
-        <button onClick={createRoom} className={styles.createRoomButton}>
-          部屋を作成
-        </button>
+        <Link href="/battle" legacyBehavior>
+          <button onClick={createRoom} className={styles.createRoomButton}>
+            部屋を作成
+          </button>
+        </Link>
 
         {/* <button onClick={searchRoom} className={styles.searchRoomButton}>
           部屋を検索

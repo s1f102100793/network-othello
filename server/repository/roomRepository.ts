@@ -18,16 +18,23 @@ export const createRoomModel = async (
   playerId2: RoomModel['playerId2']
 ): Promise<RoomModel> => {
   console.log('あああ');
-  // try {
-  // const prismaRoom = await prismaClient.room.create({
-  //   data: { board, turn, playerId1, playerId2 },
-  // });} catch (e) {
-  //   console.log(e)
-  // }
-  // console.log('いいい');
-  // return toRoomModel(prismaRoom);
   const prismaRoom = await prismaClient.room.create({
     data: { board, turn, playerId1, playerId2 },
   });
+  return toRoomModel(prismaRoom);
+};
+
+export const getRoom = async (limit?: number): Promise<RoomModel | null> => {
+  const prismaRoom = await prismaClient.room.findFirst({
+    select: {
+      board: true,
+      turn: true,
+      playerId1: true,
+      playerId2: true,
+    },
+  });
+  if (!prismaRoom) {
+    return null;
+  }
   return toRoomModel(prismaRoom);
 };
