@@ -6,6 +6,7 @@ import { userAtom } from 'src/atoms/user';
 import { Loading } from 'src/components/Loading/Loading';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
+import Sidebar from '../../components/sidebar';
 import styles from './matching.module.css';
 
 const Matching = () => {
@@ -46,6 +47,9 @@ const Matching = () => {
 
   return (
     <div className={styles.container}>
+      <div className={styles.pageContainer}>
+        <Sidebar />
+      </div>
       <div className={styles.title}>マッチングページ</div>
       <Link href="/battle" legacyBehavior>
         <button onClick={createRoom} className={styles.createRoomButton}>

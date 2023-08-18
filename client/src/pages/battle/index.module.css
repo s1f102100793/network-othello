@@ -9,10 +9,23 @@
   position: relative;
   background: linear-gradient(
     90deg,
-    #000 var(--black-percentage),
-    #fff var(--black-percentage),
-    #fff 100%
+    rgba(255, 0, 0, 0.5) var(--black-percentage),
+    rgba(0, 0, 255, 0.5) var(--black-percentage),
+    rgba(0, 0, 255, 0.5) 100%
   );
+  transition: background 1s;
+  animation: backgroundShift 1s forwards;
+}
+
+@keyframes backgroundShift {
+  to {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 0, 0, 0.5) var(--new-black-percentage),
+      rgba(0, 0, 255, 0.5) var(--new-black-percentage),
+      rgba(0, 0, 255, 0.5) 100%
+    );
+  }
 }
 
 .board {
@@ -59,14 +72,18 @@
 
 .blackcount {
   position: absolute;
-  left: 0;
+  left: 50px;
   top: 50%;
+  font-size: 100px;
+  transform: translateY(-50%);
 }
 
 .whitecount {
   position: absolute;
-  right: 0;
+  right: 50px;
   top: 50%;
+  font-size: 100px;
+  transform: translateY(-50%);
 }
 
 .homeButton {

@@ -79,14 +79,27 @@ const Home = () => {
     return count;
   };
 
-  const blackCount = countStones(1, board);
-  const whiteCount = countStones(2, board);
+  const [blackCount, setBlackCount] = useState(0);
+  const [whiteCount, setWhiteCount] = useState(0);
+
+  useEffect(() => {
+    setBlackCount(countStones(1, board));
+    setWhiteCount(countStones(2, board));
+  }, [board]);
+
+  const totalStones = blackCount + whiteCount;
+  const blackPercentage = `${(blackCount / totalStones) * 100}%`;
+
   const countsMessage = `ユーザー${turnColor}のターン`;
   // 黒: ${blackCount}, 白: ${whiteCount}`;
-  const totalStones = blackCount + whiteCount;
-  // const blackPercentage = (blackCount / totalStones) * 100;
-  // const whitePercentage = (whiteCount / totalStones) * 100;
-  const blackPercentage = `${(blackCount / totalStones) * 100}%`;
+
+  const [newBlackCount, setNewBlackCount] = useState(blackCount);
+
+  const newBlackPercentage = `${(newBlackCount / totalStones) * 100}%`;
+
+  useEffect(() => {
+    setNewBlackCount(countStones(1, board));
+  }, [board]);
 
   if (user === null) return <Loading visible />;
   const prismaBoard = async (e: FormEvent) => {
@@ -95,12 +108,13 @@ const Home = () => {
       body: { board, turn: turnColor, playerId1: user.id, playerId2: user.id },
     });
   };
+
   return (
     <div
       className={styles.container}
       style={
         {
-          '--black-percentage': blackPercentage,
+          '--new-black-percentage': newBlackPercentage,
         } as React.CSSProperties
       }
     >
