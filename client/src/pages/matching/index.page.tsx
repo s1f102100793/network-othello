@@ -1,7 +1,7 @@
 import type { RoomModel } from 'commonTypesWithClient/models';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { userAtom } from 'src/atoms/user';
 import { Loading } from 'src/components/Loading/Loading';
 import { apiClient } from 'src/utils/apiClient';
@@ -34,6 +34,12 @@ const Matching = () => {
     }
   };
 
+  useEffect(() => {
+    fetchRoom();
+    const intervalId = setInterval(fetchRoom, 100);
+    return () => clearInterval(intervalId);
+  }, []);
+
   if (user === null) return <Loading visible />;
   const createRoom = async () => {
     await apiClient.room.post({
@@ -48,29 +54,16 @@ const Matching = () => {
   return (
     <div className={styles.container}>
       <div className={styles.title}>マッチングページ</div>
-
+      <Link href="/battle" legacyBehavior>
+        <button onClick={createRoom} className={styles.createRoomButton}>
+          部屋を作成
+        </button>
+      </Link>
       <div className={styles.matchingSection}>
-        {/* <input
-          type="text"
-          placeholder="合い言葉を入力"
-          value={password}
-          // onChange={handlePasswordChange}
-          className={styles.passwordInput}
-        /> */}
-        <Link href="/battle" legacyBehavior>
-          <button onClick={createRoom} className={styles.createRoomButton}>
-            部屋を作成
-          </button>
-        </Link>
-
-        {/* <button onClick={searchRoom} className={styles.searchRoomButton}>
-          部屋を検索
-        </button> */}
-
-        {/* <p className={styles.matchingStatus}>マッチング中…</p>
-        <button className={styles.cancelButton}>キャンセル</button> */}
+        {/* こちらが追加した部分：roomが存在する場合にメッセージを表示 */}
+        {room && <p className={styles.roomMessage}>部屋があります</p>}
+        {/* ... (他のUIコンポーネント) */}
       </div>
-
       <Link href="/" legacyBehavior>
         <a className={styles.backButton}>ホームページへ戻る</a>
       </Link>
