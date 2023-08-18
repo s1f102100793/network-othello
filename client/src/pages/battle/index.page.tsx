@@ -6,12 +6,11 @@ import { userAtom } from 'src/atoms/user';
 import { Loading } from 'src/components/Loading/Loading';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
-import type { BoardArr } from '../../../../server/useCase/boardUseCase';
 import styles from './index.module.css';
 
 const Home = () => {
   const [user] = useAtom(userAtom);
-  const [board, setBoard] = useState<BoardArr>([
+  const [board, setBoard] = useState<number[][]>([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 3, 0, 0, 0],

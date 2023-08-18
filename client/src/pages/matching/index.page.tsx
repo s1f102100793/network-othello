@@ -1,9 +1,25 @@
 import type { RoomModel } from 'commonTypesWithClient/models';
+import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { useState } from 'react';
+import { userAtom } from 'src/atoms/user';
+import { Loading } from 'src/components/Loading/Loading';
+import { apiClient } from 'src/utils/apiClient';
 import styles from './matching.module.css';
 
 const Matching = () => {
+  const [user] = useAtom(userAtom);
+  const turn = 1;
+  const [board, setBoard] = useState<number[][]>([
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 3, 0, 0, 0],
+    [0, 0, 0, 1, 2, 3, 0, 0],
+    [0, 0, 3, 2, 1, 0, 0, 0],
+    [0, 0, 0, 3, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
   const [password, setPassword] = useState('');
   const [room, setRoom] = useState<RoomModel[] | undefined>(undefined);
   // const handlePasswordChange = (e) => {
@@ -17,8 +33,11 @@ const Matching = () => {
   //   }
   // };
 
-  const createRoom = () => {
-    // const room = await apiClient.room.post({})
+  if (user === null) return <Loading visible />;
+  const createRoom = async () => {
+    await apiClient.room.post({
+      body: { board, turn, playerId1: user.id, playerId2: user.id },
+    });
   };
 
   const searchRoom = () => {
@@ -30,24 +49,24 @@ const Matching = () => {
       <div className={styles.title}>マッチングページ</div>
 
       <div className={styles.matchingSection}>
-        <input
+        {/* <input
           type="text"
           placeholder="合い言葉を入力"
           value={password}
           // onChange={handlePasswordChange}
           className={styles.passwordInput}
-        />
+        /> */}
 
         <button onClick={createRoom} className={styles.createRoomButton}>
           部屋を作成
         </button>
 
-        <button onClick={searchRoom} className={styles.searchRoomButton}>
+        {/* <button onClick={searchRoom} className={styles.searchRoomButton}>
           部屋を検索
-        </button>
+        </button> */}
 
-        <p className={styles.matchingStatus}>マッチング中…</p>
-        <button className={styles.cancelButton}>キャンセル</button>
+        {/* <p className={styles.matchingStatus}>マッチング中…</p>
+        <button className={styles.cancelButton}>キャンセル</button> */}
       </div>
 
       <Link href="/" legacyBehavior>
