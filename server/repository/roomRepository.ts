@@ -18,9 +18,16 @@ export const createRoomModel = async (
   playerId2: RoomModel['playerId2']
 ): Promise<RoomModel> => {
   console.log('あああ');
+  // try {
+  // const prismaRoom = await prismaClient.room.create({
+  //   data: { board, turn, playerId1, playerId2 },
+  // });} catch (e) {
+  //   console.log(e)
+  // }
+  // console.log('いいい');
+  // return toRoomModel(prismaRoom);
   const prismaRoom = await prismaClient.room.create({
     data: { board, turn, playerId1, playerId2 },
   });
-  console.log('いいい');
   return toRoomModel(prismaRoom);
 };
