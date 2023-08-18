@@ -1,4 +1,3 @@
-import type { BoardArr } from '../useCase/boardUseCase';
 import type { TaskId, UserId } from './branded';
 
 export type UserModel = {
@@ -16,7 +15,7 @@ export type TaskModel = {
 };
 
 export type RoomModel = {
-  board: BoardArr;
+  board: number[][];
   turn: number;
   playerId1: string;
   playerId2: string | null;
