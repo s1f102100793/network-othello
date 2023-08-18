@@ -23,9 +23,6 @@ const Matching = () => {
   ]);
   const [password, setPassword] = useState('');
   const [room, setRoom] = useState<RoomModel>();
-  // const handlePasswordChange = (e) => {
-  //   setPassword(e.target.value);
-  // };
 
   const fetchRoom = async () => {
     const newRoom = await apiClient.room.$get().catch(returnNull);
@@ -47,10 +44,6 @@ const Matching = () => {
     });
   };
 
-  const searchRoom = () => {
-    // 合い言葉を使用して部屋を検索するAPI呼び出しやロジックをここに追加
-  };
-
   return (
     <div className={styles.container}>
       <div className={styles.title}>マッチングページ</div>
@@ -59,11 +52,11 @@ const Matching = () => {
           部屋を作成
         </button>
       </Link>
-      <div className={styles.matchingSection}>
-        {/* こちらが追加した部分：roomが存在する場合にメッセージを表示 */}
-        {room && <p className={styles.roomMessage}>部屋があります</p>}
-        {/* ... (他のUIコンポーネント) */}
-      </div>
+      <Link href="/battle" legacyBehavior>
+        <div className={styles.matchingSection}>
+          {room && <p className={styles.roomMessage}>部屋があります</p>}
+        </div>
+      </Link>
       <Link href="/" legacyBehavior>
         <a className={styles.backButton}>ホームページへ戻る</a>
       </Link>
