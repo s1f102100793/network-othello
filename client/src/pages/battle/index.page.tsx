@@ -6,12 +6,11 @@ import { userAtom } from 'src/atoms/user';
 import { Loading } from 'src/components/Loading/Loading';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
-import type { BoardArr } from '../../../../server/useCase/boardUseCase';
 import styles from './index.module.css';
 
 const Home = () => {
   const [user] = useAtom(userAtom);
-  const [board, setBoard] = useState<BoardArr>([
+  const [board, setBoard] = useState<number[][]>([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 3, 0, 0, 0],
@@ -27,15 +26,6 @@ const Home = () => {
     const board = await apiClient.board.$get().catch(returnNull);
 
     if (board !== null) setBoard(board);
-  };
-
-  const createBoard = async (x: number, y: number, turn: number) => {
-    if (board[y][x] === 3) {
-      const a = await apiClient.board.post({ body: { board, x, y, turn } });
-      console.log(a.body.board);
-      setBoard(a.body.board);
-      setTurnColor(3 - a.body.turn);
-    }
   };
 
   const resetBoard = async () => {
@@ -86,6 +76,19 @@ const Home = () => {
   // 黒: ${blackCount}, 白: ${whiteCount}`;
 
   if (user === null) return <Loading visible />;
+
+  const createBoard = async (x: number, y: number, turn: number) => {
+    if (board[y][x] === 3) {
+      const a = await apiClient.board.post({
+        body: { board, x, y, turn, playerId1: user.id, playerId2: user.id },
+      });
+      console.log(a.body.board);
+      setBoard(a.body.board);
+      setTurnColor(3 - a.body.turn);
+    }
+  };
+
+
   const prismaBoard = async (e: FormEvent) => {
     e.preventDefault();
     await apiClient.room.post({

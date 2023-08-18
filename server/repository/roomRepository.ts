@@ -10,14 +10,16 @@ export const toRoomModel = (prismaRoom: Room): RoomModel => ({
   playerId2: prismaRoom.playerId2,
 });
 
-export const createRoomModel = async (
-  board: number[][],
-  turn: RoomModel['turn'],
-  playerId1: RoomModel['playerId1'],
-  playerId2: RoomModel['playerId2']
-): Promise<RoomModel> => {
-  const prismaRoom = await prismaClient.room.create({
-    data: { board, turn, playerId1, playerId2 },
-  });
-  return toRoomModel(prismaRoom);
+export const roomRepository = {
+  createRoomModel: async (
+    board: number[][],
+    turn: RoomModel['turn'],
+    playerId1: RoomModel['playerId1'],
+    playerId2: RoomModel['playerId2']
+  ): Promise<RoomModel> => {
+    const prismaRoom = await prismaClient.room.create({
+      data: { board, turn, playerId1, playerId2 },
+    });
+    return toRoomModel(prismaRoom);
+  },
 };
