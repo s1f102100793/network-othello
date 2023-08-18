@@ -6,10 +6,7 @@ const Sidebar = () => {
 
   return (
     <>
-      <button 
-        className={styles.hamburger} 
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <button className={styles.hamburger} onClick={() => setIsOpen(!isOpen)}>
         ☰
       </button>
       {isOpen && (
