@@ -27,7 +27,10 @@
   max-width: 400px; /* or any desired maximum width */
 }
 
-.matchingButton, .cancelButton, .createRoomButton, .searchRoomButton {
+.matchingButton,
+.cancelButton,
+.createRoomButton,
+.searchRoomButton {
   padding: 15px 30px;
   font-size: 20px;
   border: none;
@@ -39,7 +42,7 @@
 }
 
 .matchingButton {
-  background-color: #007BFF;
+  background-color: #007bff;
   color: white;
 }
 
@@ -64,11 +67,17 @@
 
 .backButton {
   margin-top: 50px;
-  color: #007BFF;
+  color: #007bff;
   text-decoration: none;
   font-size: 20px;
 }
 
 .backButton:hover {
   text-decoration: underline;
+}
+
+.roomMessage {
+  font-weight: bold;
+  color: green;
+  margin: 10px 0;
 }

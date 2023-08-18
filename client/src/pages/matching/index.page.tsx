@@ -1,55 +1,62 @@
 import type { RoomModel } from 'commonTypesWithClient/models';
+import { useAtom } from 'jotai';
 import Link from 'next/link';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { userAtom } from 'src/atoms/user';
+import { Loading } from 'src/components/Loading/Loading';
+import { apiClient } from 'src/utils/apiClient';
+import { returnNull } from 'src/utils/returnNull';
 import styles from './matching.module.css';
 
 const Matching = () => {
+  const [user] = useAtom(userAtom);
+  const turn = 1;
+  const [board, setBoard] = useState<number[][]>([
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 3, 0, 0, 0],
+    [0, 0, 0, 1, 2, 3, 0, 0],
+    [0, 0, 3, 2, 1, 0, 0, 0],
+    [0, 0, 0, 3, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0, 0],
+  ]);
   const [password, setPassword] = useState('');
-  const [room, setRoom] = useState<RoomModel[] | undefined>(undefined);
-  // const handlePasswordChange = (e) => {
-  //   setPassword(e.target.value);
-  // };
+  const [room, setRoom] = useState<RoomModel>();
 
-  // const fetchRoom = async () => {
-  //   const newRoom = await apiClient.room.$get().catch(returnNull);
-  //   if (newRoom !== null) {
-  //     setRoom(newRoom);
-  //   }
-  // };
-
-  const createRoom = () => {
-    // const room = await apiClient.room.post({})
+  const fetchRoom = async () => {
+    const newRoom = await apiClient.room.$get().catch(returnNull);
+    if (newRoom !== null) {
+      setRoom(newRoom);
+    }
   };
 
-  const searchRoom = () => {
-    // 合い言葉を使用して部屋を検索するAPI呼び出しやロジックをここに追加
+  useEffect(() => {
+    fetchRoom();
+    const intervalId = setInterval(fetchRoom, 100);
+    return () => clearInterval(intervalId);
+  }, []);
+
+  if (user === null) return <Loading visible />;
+  const createRoom = async () => {
+    await apiClient.room.post({
+      body: { board, turn, playerId1: user.id, playerId2: user.id },
+    });
   };
 
   return (
     <div className={styles.container}>
       <div className={styles.title}>マッチングページ</div>
-
-      <div className={styles.matchingSection}>
-        <input
-          type="text"
-          placeholder="合い言葉を入力"
-          value={password}
-          // onChange={handlePasswordChange}
-          className={styles.passwordInput}
-        />
-
+      <Link href="/battle" legacyBehavior>
         <button onClick={createRoom} className={styles.createRoomButton}>
           部屋を作成
         </button>
-
-        <button onClick={searchRoom} className={styles.searchRoomButton}>
-          部屋を検索
-        </button>
-
-        <p className={styles.matchingStatus}>マッチング中…</p>
-        <button className={styles.cancelButton}>キャンセル</button>
-      </div>
-
+      </Link>
+      <Link href="/battle" legacyBehavior>
+        <div className={styles.matchingSection}>
+          {room && <p className={styles.roomMessage}>部屋があります</p>}
+        </div>
+      </Link>
       <Link href="/" legacyBehavior>
         <a className={styles.backButton}>ホームページへ戻る</a>
       </Link>
