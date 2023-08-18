@@ -12,9 +12,9 @@ const Home = () => {
           dominate the board!
         </p>
         <div className={styles.buttons}>
-          <Link href="/login">
+          {/* <Link href="/login">
             <button className={styles.loginButton}>ログイン</button>
-          </Link>
+          </Link> */}
           <Link href="/matching">
             <button className={styles.matchingButton}>マッチングする</button>
           </Link>

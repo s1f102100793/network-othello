@@ -1,12 +1,16 @@
+import { useAtom } from 'jotai';
 import Link from 'next/link';
 import type { FormEvent } from 'react';
 import { useEffect, useState } from 'react';
+import { userAtom } from 'src/atoms/user';
+import { Loading } from 'src/components/Loading/Loading';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
 import type { BoardArr } from '../../../../server/useCase/boardUseCase';
 import styles from './index.module.css';
 
 const Home = () => {
+  const [user] = useAtom(userAtom);
   const [board, setBoard] = useState<BoardArr>([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -81,11 +85,13 @@ const Home = () => {
   const countsMessage = `ユーザー${turnColor}のターン`;
   // 黒: ${blackCount}, 白: ${whiteCount}`;
 
+  if (user === null) return <Loading visible />;
   const prismaBoard = async (e: FormEvent) => {
     e.preventDefault();
-    await apiClient.room.post({ body: { board, turn: turnColor } });
+    await apiClient.room.post({
+      body: { board, turn: turnColor, playerId1: user.id, playerId2: user.id },
+    });
   };
-
   return (
     <div className={styles.container}>
       <div className={styles.board}>
