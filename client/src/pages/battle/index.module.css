@@ -7,6 +7,12 @@
   min-height: 100vh;
   padding: 0 0.5rem;
   position: relative;
+  background: linear-gradient(
+    90deg,
+    #000 var(--black-percentage),
+    #fff var(--black-percentage),
+    #fff 100%
+  );
 }
 
 .board {
@@ -77,6 +83,3 @@
 .homeButton:hover {
   background-color: #555;
 }
-
-
-

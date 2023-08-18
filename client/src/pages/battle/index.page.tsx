@@ -84,8 +84,9 @@ const Home = () => {
   const countsMessage = `ユーザー${turnColor}のターン`;
   // 黒: ${blackCount}, 白: ${whiteCount}`;
   const totalStones = blackCount + whiteCount;
-  const blackPercentage = (blackCount / totalStones) * 100;
-  const whitePercentage = (whiteCount / totalStones) * 100;
+  // const blackPercentage = (blackCount / totalStones) * 100;
+  // const whitePercentage = (whiteCount / totalStones) * 100;
+  const blackPercentage = `${(blackCount / totalStones) * 100}%`;
 
   if (user === null) return <Loading visible />;
   const prismaBoard = async (e: FormEvent) => {
@@ -97,10 +98,11 @@ const Home = () => {
   return (
     <div
       className={styles.container}
-      style={{
-        // 線形グラデーションで背景を描画。黒の部分と白の部分の割合を計算した値に基づいて設定
-        background: `linear-gradient(90deg, #000 ${blackPercentage}%, #fff ${blackPercentage}%, #fff 100%)`,
-      }}
+      style={
+        {
+          '--black-percentage': blackPercentage,
+        } as React.CSSProperties
+      }
     >
       <div className={styles.board}>
         {board.map((row, y) =>
