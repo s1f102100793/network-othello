@@ -79,11 +79,19 @@ const Home = () => {
     return count;
   };
 
-  const blackCount = countStones(1, board);
-  const whiteCount = countStones(2, board);
+  const [blackCount, setBlackCount] = useState(0);
+  const [whiteCount, setWhiteCount] = useState(0);
+
+  useEffect(() => {
+    setBlackCount(countStones(1, board));
+    setWhiteCount(countStones(2, board));
+  }, [board]);
+
+  const totalStones = blackCount + whiteCount;
+  const blackPercentage = `${(blackCount / totalStones) * 100}%`;
+
   const countsMessage = `ユーザー${turnColor}のターン`;
   // 黒: ${blackCount}, 白: ${whiteCount}`;
-  const totalStones = blackCount + whiteCount;
 
   const [newBlackCount, setNewBlackCount] = useState(blackCount);
 
@@ -102,14 +110,12 @@ const Home = () => {
   };
 
   return (
-    <div
-      className={styles.container}
-      style={
-        {
-          '--new-black-percentage': newBlackPercentage,
-        } as React.CSSProperties
-      }
-    >
+    <div 
+    className={styles.container}
+    style={{
+      '--black-percentage': blackPercentage
+    } as React.CSSProperties}
+>
       <div className={styles.board}>
         {board.map((row, y) =>
           row.map((color, x) => (

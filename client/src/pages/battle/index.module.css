@@ -13,6 +13,7 @@
     rgba(0, 0, 255, 0.5) var(--black-percentage),
     rgba(0, 0, 255, 0.5) 100%
   );
+  transition: background 1s;
   animation: backgroundShift 1s forwards;
 }
 
