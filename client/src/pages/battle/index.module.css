@@ -72,14 +72,18 @@
 
 .blackcount {
   position: absolute;
-  left: 0;
+  left: 50px;
   top: 50%;
+  font-size: 100px;
+  transform: translateY(-50%);
 }
 
 .whitecount {
   position: absolute;
-  right: 0;
+  right: 50px;
   top: 50%;
+  font-size: 100px;
+  transform: translateY(-50%);
 }
 
 .homeButton {

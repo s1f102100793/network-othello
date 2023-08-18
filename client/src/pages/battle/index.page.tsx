@@ -110,12 +110,14 @@ const Home = () => {
   };
 
   return (
-    <div 
-    className={styles.container}
-    style={{
-      '--black-percentage': blackPercentage
-    } as React.CSSProperties}
->
+    <div
+      className={styles.container}
+      style={
+        {
+          '--new-black-percentage': newBlackPercentage,
+        } as React.CSSProperties
+      }
+    >
       <div className={styles.board}>
         {board.map((row, y) =>
           row.map((color, x) => (
