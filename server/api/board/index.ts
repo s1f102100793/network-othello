@@ -6,14 +6,7 @@ export type Methods = DefineMethods<{
     resBody: BoardArr;
   };
   post: {
-    reqBody: {
-      board: number[][];
-      x: number;
-      y: number;
-      turn: number;
-      playerId1: string;
-      playerId2: string | null;
-    };
+    reqBody: { board: number[][]; x: number; y: number; turn: number };
     resBody: { board: BoardArr; turn: number };
   };
 }>;

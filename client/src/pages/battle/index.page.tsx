@@ -28,6 +28,17 @@ const Home = () => {
     if (board !== null) setBoard(board);
   };
 
+  const createBoard = async (x: number, y: number, turn: number) => {
+    if (board[y][x] === 3) {
+      const a = await apiClient.board.post({
+        body: { board, x, y, turn },
+      });
+      console.log(a.body.board);
+      setBoard(a.body.board);
+      setTurnColor(3 - a.body.turn);
+    }
+  };
+
   const resetBoard = async () => {
     const b = await apiClient.newboard.post({ body: { board } });
     console.log(b);
@@ -76,18 +87,6 @@ const Home = () => {
   // 黒: ${blackCount}, 白: ${whiteCount}`;
 
   if (user === null) return <Loading visible />;
-
-  const createBoard = async (x: number, y: number, turn: number) => {
-    if (board[y][x] === 3) {
-      const a = await apiClient.board.post({
-        body: { board, x, y, turn, playerId1: user.id, playerId2: user.id },
-      });
-      console.log(a.body.board);
-      setBoard(a.body.board);
-      setTurnColor(3 - a.body.turn);
-    }
-  };
-
 
   const prismaBoard = async (e: FormEvent) => {
     e.preventDefault();
