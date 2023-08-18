@@ -5,8 +5,8 @@ import { useState } from 'react';
 import { userAtom } from 'src/atoms/user';
 import { Loading } from 'src/components/Loading/Loading';
 import { apiClient } from 'src/utils/apiClient';
-import styles from './matching.module.css';
 import { returnNull } from 'src/utils/returnNull';
+import styles from './matching.module.css';
 
 const Matching = () => {
   const [user] = useAtom(userAtom);
@@ -22,7 +22,7 @@ const Matching = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
   const [password, setPassword] = useState('');
-  const [room, setRoom] = useState<RoomModel[] | undefined>(undefined);
+  const [room, setRoom] = useState<RoomModel>();
   // const handlePasswordChange = (e) => {
   //   setPassword(e.target.value);
   // };

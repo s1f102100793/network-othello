@@ -3,7 +3,10 @@ import type { RoomModel } from '../../commonTypesWithClient/models';
 
 export type Methods = DefineMethods<{
   get: {
-    resBody: string;
+    query?: {
+      limit?: number;
+    };
+    resBody: RoomModel | null;
   };
   post: {
     reqBody: { board: number[][]; turn: number; playerId1: string; playerId2: string | null };
