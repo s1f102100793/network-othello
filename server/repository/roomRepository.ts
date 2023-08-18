@@ -24,7 +24,7 @@ export const createRoomModel = async (
   return toRoomModel(prismaRoom);
 };
 
-export const getRoom = async (limit?: number): Promise<RoomModel | null> => {
+export const getRoom = async (): Promise<RoomModel | null> => {
   const prismaRoom = await prismaClient.room.findFirst({
     select: {
       board: true,
@@ -36,5 +36,10 @@ export const getRoom = async (limit?: number): Promise<RoomModel | null> => {
   if (!prismaRoom) {
     return null;
   }
+  return toRoomModel(prismaRoom);
+};
+
+export const deleteRoom = async (playerId1: string): Promise<RoomModel> => {
+  const prismaRoom = await prismaClient.room.delete({ where: { playerId1 } });
   return toRoomModel(prismaRoom);
 };

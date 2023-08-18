@@ -32,6 +32,13 @@ const Matching = () => {
     }
   };
 
+  const deleteRoom = async () => {
+    if (room && room.playerId1 !== undefined && room.playerId1 !== null) {
+      await apiClient.room._room(room.playerId1).delete();
+      fetchRoom();
+    }
+  };
+
   useEffect(() => {
     fetchRoom();
     const intervalId = setInterval(fetchRoom, 100);
@@ -61,6 +68,9 @@ const Matching = () => {
           {room && <p className={styles.roomMessage}>部屋があります</p>}
         </div>
       </Link>
+      <div onClick={deleteRoom} className={styles.matchingSection}>
+        {room && <p className={styles.roomMessage}>部屋を削除する</p>}
+      </div>
       <Link href="/" legacyBehavior>
         <a className={styles.backButton}>ホームページへ戻る</a>
       </Link>
