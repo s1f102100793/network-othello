@@ -21,6 +21,7 @@ const Home = () => {
     [0, 0, 0, 0, 0, 0, 0, 0],
   ]);
   const [turnColor, setTurnColor] = useState(1);
+  const [isAnimating, setIsAnimating] = useState(false);
 
   const fetchBoard = async () => {
     const board = await apiClient.board.$get().catch(returnNull);
@@ -108,10 +109,8 @@ const Home = () => {
   }, [board]);
 
   const totalStones = blackCount + whiteCount;
-  const blackPercentage = `${(blackCount / totalStones) * 100}%`;
 
   const countsMessage = `ユーザー${turnColor}のターン`;
-  // 黒: ${blackCount}, 白: ${whiteCount}`;
 
   const [newBlackCount, setNewBlackCount] = useState(blackCount);
 
@@ -123,7 +122,7 @@ const Home = () => {
 
   return (
     <div
-      className={styles.container}
+      className={`${styles.container} ${isAnimating ? styles.animating : ''}`}
       style={
         {
           '--new-black-percentage': newBlackPercentage,

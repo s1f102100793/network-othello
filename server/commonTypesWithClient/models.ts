@@ -19,5 +19,5 @@ export type RoomModel = {
   board: number[][];
   turn: number;
   playerId1: string;
-  playerId2: string | null;
+  playerId2: string | null | undefined;
 };
