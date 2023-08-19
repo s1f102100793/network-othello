@@ -12,6 +12,7 @@ import styles from './matching.module.css';
 
 const Matching = () => {
   const [user] = useAtom(userAtom);
+  const [roomid, setRoomid] = useState<string>();
   const turn = 1;
   const board = [
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -40,8 +41,14 @@ const Matching = () => {
     window.location.reload();
   };
 
-  const updateRoom = async () => {
-    console.log('いいい');
+  const updateRoom = async (roomId: string, newPlayerId2: string) => {
+    try {
+      await apiClient.room.update({
+        body: { roomId, playerId2: newPlayerId2 },
+      });
+    } catch (error) {
+      console.error('部屋の更新に失敗しました:', error);
+    }
   };
 
   useEffect(() => {
@@ -53,6 +60,7 @@ const Matching = () => {
   if (user === null) return <Loading visible />;
   const createRoom = async () => {
     const uuid = uuidv4();
+    setRoomid(uuid);
     await apiClient.room.post({
       body: { roomId: uuid, board, turn, playerId1: user.id, playerId2: user.id },
     });
@@ -73,7 +81,7 @@ const Matching = () => {
       )}
       {room && (
         <Link href="/battle" legacyBehavior>
-          <button onClick={updateRoom} className={styles.updateRoomButton}>
+          <button onClick={() => updateRoom(roomid, user.id)} className={styles.updateRoomButton}>
             <p>部屋があります</p>
           </button>
         </Link>

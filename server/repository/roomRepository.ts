@@ -25,6 +25,16 @@ export const createRoomModel = async (
   });
   return toRoomModel(prismaRoom);
 };
+export const updateRoomModel = async (
+  roomId: RoomModel['roomId'],
+  playerId2: RoomModel['playerId2']
+): Promise<RoomModel> => {
+  const prismaRoom = await prismaClient.room.update({
+    where: { roomId },
+    data: { playerId2 },
+  });
+  return toRoomModel(prismaRoom);
+};
 
 export const getRoom = async (): Promise<RoomModel | null> => {
   // console.log('1');
@@ -44,18 +54,6 @@ export const getRoom = async (): Promise<RoomModel | null> => {
   // console.log('3');
   return toRoomModel(prismaRoom);
 };
-
-// export const deleteRoom = async (roomId: string): Promise<RoomModel> => {
-//   console.log('1');
-//   try {
-//     const prismaRoom = await prismaClient.room.delete({ where: { roomId } });
-//     console.log('2');
-//     return toRoomModel(prismaRoom);
-//   } catch (e) {
-//     console.error('Error deleting room:', e.message);
-//     throw e;
-//   }
-// };
 
 export const deleteAllRooms = async (): Promise<void> => {
   console.log('1');
