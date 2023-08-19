@@ -12,7 +12,7 @@ import styles from './matching.module.css';
 
 const Matching = () => {
   const [user] = useAtom(userAtom);
-  const [roomid, setRoomid] = useState<string>();
+  const [roomid, setRoomid] = useState<string | undefined>();
   const turn = 1;
   const board = [
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -41,10 +41,15 @@ const Matching = () => {
     window.location.reload();
   };
 
-  const updateRoom = async (roomId: string, newPlayerId2: string) => {
+  const updateRoom = async () => {
+    if (typeof roomid !== 'string') {
+      console.error('roomId is not defined');
+      return;
+    }
+
     try {
-      await apiClient.room.update({
-        body: { roomId, playerId2: newPlayerId2 },
+      await apiClient.room.$patch({
+        body: { roomId: roomid, playerId2: user?.id || null },
       });
     } catch (error) {
       console.error('部屋の更新に失敗しました:', error);
@@ -81,7 +86,7 @@ const Matching = () => {
       )}
       {room && (
         <Link href="/battle" legacyBehavior>
-          <button onClick={() => updateRoom(roomid, user.id)} className={styles.updateRoomButton}>
+          <button onClick={updateRoom} className={styles.updateRoomButton}>
             <p>部屋があります</p>
           </button>
         </Link>

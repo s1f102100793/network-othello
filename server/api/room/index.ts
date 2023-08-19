@@ -18,4 +18,11 @@ export type Methods = DefineMethods<{
     };
     resBody: RoomModel;
   };
+  patch: {
+    reqBody: {
+      roomId: string;
+      playerId2: string | null;
+    };
+    resBody: RoomModel;
+  };
 }>;

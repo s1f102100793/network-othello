@@ -37,7 +37,6 @@ export const updateRoomModel = async (
 };
 
 export const getRoom = async (): Promise<RoomModel | null> => {
-  // console.log('1');
   const prismaRoom = await prismaClient.room.findFirst({
     select: {
       roomId: true,
@@ -47,11 +46,9 @@ export const getRoom = async (): Promise<RoomModel | null> => {
       playerId2: true,
     },
   });
-  // console.log('2');
   if (!prismaRoom) {
     return null;
   }
-  // console.log('3');
   return toRoomModel(prismaRoom);
 };
 
