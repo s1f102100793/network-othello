@@ -17,6 +17,7 @@
 }
 
 .matchingSection {
+  margin-top: 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -52,6 +53,7 @@
 }
 
 .createRoomButton {
+  margin-top: 20px;
   background-color: #28a745; /* Green for creation */
   color: white;
 }

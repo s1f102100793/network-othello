@@ -6,7 +6,7 @@ export default defineController(() => ({
   //   await deleteRoom(params.room);
   //   return { status: 204 };
   // },
-  delete: async ({ params }) => {
+  delete: async () => {
     await deleteAllRooms();
     return { status: 204 };
   },

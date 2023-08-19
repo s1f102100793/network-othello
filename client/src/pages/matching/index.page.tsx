@@ -39,9 +39,9 @@ const Matching = () => {
     }
   };
 
-  // const updateRoom = async () = {
-
-  // }
+  const updateRoom = async () => {
+    console.log('いいい');
+  };
 
   useEffect(() => {
     fetchRoom();
@@ -68,13 +68,13 @@ const Matching = () => {
           部屋を作成
         </button>
       </Link>
-      {/* <Link href="/battle" legacyBehavior>
-        <div onClick={updateRoom} className={styles.matchingSection}>
-          {room && <p className={styles.roomMessage}>部屋があります</p>}
-        </div>
-      </Link> */}
+      <Link href="/battle" legacyBehavior>
+        <button onClick={updateRoom} className={styles.createRoomButton}>
+          {room && <p>部屋があります</p>}
+        </button>
+      </Link>
       <button onClick={deleteRoom} className={styles.matchingSection}>
-        {room && <p className={styles.roomMessage}>部屋を削除する</p>}
+        {room && <p className={styles.roomMessage}>部屋を全部削除する</p>}
       </button>
       <Link href="/" legacyBehavior>
         <a className={styles.backButton}>ホームページへ戻る</a>
