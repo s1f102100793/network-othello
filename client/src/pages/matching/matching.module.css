@@ -20,22 +20,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 20px; /* 各要素の間隔 */
-}
-
-.passwordInput {
-  padding: 10px 20px;
-  font-size: 20px;
-  border: 1px solid #ccc;
-  border-radius: 5px;
-  width: 100%;
-  max-width: 400px; /* or any desired maximum width */
-}
-
-.matchingButton,
-.cancelButton,
-.createRoomButton,
-.searchRoomButton {
+  gap: 20px;
   padding: 15px 30px;
   font-size: 20px;
   border: none;
@@ -43,31 +28,38 @@
   border-radius: 5px;
   transition: background-color 0.3s ease;
   width: 100%;
-  max-width: 400px; /* ensuring consistent button widths */
+  max-width: 400px;
+  margin-top: 20px;
 }
 
-.matchingButton {
-  background-color: #007bff;
+.updateRoomButton,
+.createRoomButton {
+  padding: 15px 30px;
+  font-size: 20px;
+  border: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+  width: 100%;
+  max-width: 400px;
+}
+
+.updateRoomButton {
+  margin-top: 20px;
+  background-color: #28a745;
   color: white;
 }
 
 .createRoomButton {
+  margin-top: 20px;
   background-color: #28a745; /* Green for creation */
   color: white;
 }
 
-.searchRoomButton {
-  background-color: #ffc107; /* Yellow for search */
-  color: black;
-}
-
-.cancelButton {
-  background-color: #dc3545;
-  color: white;
-}
-
-.matchingStatus {
-  font-size: 20px;
+.roomMessage {
+  font-weight: bold;
+  color: green;
+  margin: 10px 0;
 }
 
 .backButton {
@@ -79,10 +71,4 @@
 
 .backButton:hover {
   text-decoration: underline;
-}
-
-.roomMessage {
-  font-weight: bold;
-  color: green;
-  margin: 10px 0;
 }

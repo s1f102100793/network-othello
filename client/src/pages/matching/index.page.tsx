@@ -12,6 +12,7 @@ import styles from './matching.module.css';
 
 const Matching = () => {
   const [user] = useAtom(userAtom);
+  const [roomid, setRoomid] = useState<string | undefined>();
   const turn = 1;
   const board = [
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -37,11 +38,23 @@ const Matching = () => {
       await apiClient.room._room(room.playerId1).delete();
       fetchRoom();
     }
+    window.location.reload();
   };
 
-  // const updateRoom = async () = {
+  const updateRoom = async () => {
+    if (typeof roomid !== 'string') {
+      console.error('roomId is not defined');
+      return;
+    }
 
-  // }
+    try {
+      await apiClient.room.$patch({
+        body: { roomId: roomid, playerId2: user?.id || null },
+      });
+    } catch (error) {
+      console.error('部屋の更新に失敗しました:', error);
+    }
+  };
 
   useEffect(() => {
     fetchRoom();
@@ -52,8 +65,9 @@ const Matching = () => {
   if (user === null) return <Loading visible />;
   const createRoom = async () => {
     const uuid = uuidv4();
+    setRoomid(uuid);
     await apiClient.room.post({
-      body: { roomId: uuid, board, turn, playerId1: user.id, playerId2: null },
+      body: { roomId: uuid, board, turn, playerId1: user.id, playerId2: user.id },
     });
   };
 
@@ -63,19 +77,25 @@ const Matching = () => {
         <Sidebar />
       </div>
       <div className={styles.title}>マッチングページ</div>
-      <Link href="/battle" legacyBehavior>
-        <button onClick={createRoom} className={styles.createRoomButton}>
-          部屋を作成
+      {!room && (
+        <Link href="/battle" legacyBehavior>
+          <button onClick={createRoom} className={styles.createRoomButton}>
+            部屋を作成
+          </button>
+        </Link>
+      )}
+      {room && (
+        <Link href="/battle" legacyBehavior>
+          <button onClick={updateRoom} className={styles.updateRoomButton}>
+            <p>部屋があります</p>
+          </button>
+        </Link>
+      )}
+      {room && (
+        <button onClick={deleteRoom} className={styles.matchingSection}>
+          <p className={styles.roomMessage}>部屋を全部削除する</p>
         </button>
-      </Link>
-      {/* <Link href="/battle" legacyBehavior>
-        <div onClick={updateRoom} className={styles.matchingSection}>
-          {room && <p className={styles.roomMessage}>部屋があります</p>}
-        </div>
-      </Link> */}
-      <button onClick={deleteRoom} className={styles.matchingSection}>
-        {room && <p className={styles.roomMessage}>部屋を削除する</p>}
-      </button>
+      )}
       <Link href="/" legacyBehavior>
         <a className={styles.backButton}>ホームページへ戻る</a>
       </Link>
