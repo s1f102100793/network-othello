@@ -68,14 +68,18 @@ const Matching = () => {
           部屋を作成
         </button>
       </Link>
-      <Link href="/battle" legacyBehavior>
-        <button onClick={updateRoom} className={styles.createRoomButton}>
-          {room && <p>部屋があります</p>}
+      {room && (
+        <Link href="/battle" legacyBehavior>
+          <button onClick={updateRoom} className={styles.updateRoomButton}>
+            <p>部屋があります</p>
+          </button>
+        </Link>
+      )}
+      {room && (
+        <button onClick={deleteRoom} className={styles.matchingSection}>
+          <p className={styles.roomMessage}>部屋を全部削除する</p>
         </button>
-      </Link>
-      <button onClick={deleteRoom} className={styles.matchingSection}>
-        {room && <p className={styles.roomMessage}>部屋を全部削除する</p>}
-      </button>
+      )}
       <Link href="/" legacyBehavior>
         <a className={styles.backButton}>ホームページへ戻る</a>
       </Link>
