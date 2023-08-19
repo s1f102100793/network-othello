@@ -6,13 +6,14 @@ import { userAtom } from 'src/atoms/user';
 import { Loading } from 'src/components/Loading/Loading';
 import { apiClient } from 'src/utils/apiClient';
 import { returnNull } from 'src/utils/returnNull';
+import { v4 as uuidv4 } from 'uuid';
 import Sidebar from '../../components/sidebar';
 import styles from './matching.module.css';
 
 const Matching = () => {
   const [user] = useAtom(userAtom);
   const turn = 1;
-  const [board, setBoard] = useState<number[][]>([
+  const board = [
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 3, 0, 0, 0],
@@ -21,8 +22,7 @@ const Matching = () => {
     [0, 0, 0, 3, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
-  ]);
-  const [password, setPassword] = useState('');
+  ];
   const [room, setRoom] = useState<RoomModel>();
 
   const fetchRoom = async () => {
@@ -32,6 +32,17 @@ const Matching = () => {
     }
   };
 
+  const deleteRoom = async () => {
+    if (room && room.playerId1 !== undefined && room.playerId1 !== null) {
+      await apiClient.room._room(room.playerId1).delete();
+      fetchRoom();
+    }
+  };
+
+  // const updateRoom = async () = {
+
+  // }
+
   useEffect(() => {
     fetchRoom();
     const intervalId = setInterval(fetchRoom, 100);
@@ -40,8 +51,9 @@ const Matching = () => {
 
   if (user === null) return <Loading visible />;
   const createRoom = async () => {
+    const uuid = uuidv4();
     await apiClient.room.post({
-      body: { board, turn, playerId1: user.id, playerId2: user.id },
+      body: { roomId: uuid, board, turn, playerId1: user.id, playerId2: null },
     });
   };
 
@@ -56,11 +68,14 @@ const Matching = () => {
           部屋を作成
         </button>
       </Link>
-      <Link href="/battle" legacyBehavior>
-        <div className={styles.matchingSection}>
+      {/* <Link href="/battle" legacyBehavior>
+        <div onClick={updateRoom} className={styles.matchingSection}>
           {room && <p className={styles.roomMessage}>部屋があります</p>}
         </div>
-      </Link>
+      </Link> */}
+      <button onClick={deleteRoom} className={styles.matchingSection}>
+        {room && <p className={styles.roomMessage}>部屋を削除する</p>}
+      </button>
       <Link href="/" legacyBehavior>
         <a className={styles.backButton}>ホームページへ戻る</a>
       </Link>

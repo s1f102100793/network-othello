@@ -15,8 +15,9 @@ model Task {
 }
 
 model Room {
-  board      Json   
-  turn       Int
-  playerId1  String  @id
-  playerId2  String? 
+  roomId    String  @id
+  board     Json
+  turn      Int
+  playerId1 String
+  playerId2 String?
 }

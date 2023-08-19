@@ -15,6 +15,7 @@ export type TaskModel = {
 };
 
 export type RoomModel = {
+  roomId: string;
   board: number[][];
   turn: number;
   playerId1: string;

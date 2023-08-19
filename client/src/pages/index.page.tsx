@@ -19,9 +19,6 @@ const Home = () => {
             <button className={styles.matchingButton}>マッチングする</button>
           </Link>
         </div>
-        <Link href="/battle">
-          <button className={styles.matchingButton}>バトル</button>
-        </Link>
       </div>
     </>
   );
