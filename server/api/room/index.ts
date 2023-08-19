@@ -9,7 +9,13 @@ export type Methods = DefineMethods<{
     resBody: RoomModel | null;
   };
   post: {
-    reqBody: { board: number[][]; turn: number; playerId1: string; playerId2: string | null };
+    reqBody: {
+      roomId: string;
+      board: number[][];
+      turn: number;
+      playerId1: string;
+      playerId2: string | null;
+    };
     resBody: RoomModel;
   };
 }>;
