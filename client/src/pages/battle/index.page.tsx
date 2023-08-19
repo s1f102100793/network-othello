@@ -1,3 +1,4 @@
+import type { RoomModel } from 'commonTypesWithClient/models';
 import { useAtom } from 'jotai';
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
@@ -8,6 +9,7 @@ import styles from './index.module.css';
 
 const Home = () => {
   const [user] = useAtom(userAtom);
+  const [room, setRoom] = useState<RoomModel>();
   const [board, setBoard] = useState<number[][]>([
     [0, 0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0, 0],
@@ -77,6 +79,26 @@ const Home = () => {
     return count;
   };
 
+  const fetchRoom = async () => {
+    const newRoom = await apiClient.room.$get().catch(returnNull);
+    if (newRoom !== null) {
+      setRoom(newRoom);
+    }
+  };
+
+  const deleteRoom = async () => {
+    if (room && room.playerId1 !== undefined && room.playerId1 !== null) {
+      await apiClient.room._room(room.playerId1).delete();
+      fetchRoom();
+    }
+  };
+
+  useEffect(() => {
+    fetchRoom();
+    const intervalId = setInterval(fetchRoom, 100);
+    return () => clearInterval(intervalId);
+  }, []);
+
   const [blackCount, setBlackCount] = useState(0);
   const [whiteCount, setWhiteCount] = useState(0);
 
@@ -137,7 +159,7 @@ const Home = () => {
         ゲーム終了
       </button>
       <Link href="/">
-        <button className={styles.homeButton} onClick={resetBoard}>
+        <button className={styles.homeButton} onClick={deleteRoom}>
           ホームページへ
         </button>
       </Link>

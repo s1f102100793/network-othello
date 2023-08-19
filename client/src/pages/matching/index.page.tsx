@@ -37,6 +37,7 @@ const Matching = () => {
       await apiClient.room._room(room.playerId1).delete();
       fetchRoom();
     }
+    window.location.reload();
   };
 
   const updateRoom = async () => {
@@ -63,11 +64,13 @@ const Matching = () => {
         <Sidebar />
       </div>
       <div className={styles.title}>マッチングページ</div>
-      <Link href="/battle" legacyBehavior>
-        <button onClick={createRoom} className={styles.createRoomButton}>
-          部屋を作成
-        </button>
-      </Link>
+      {!room && (
+        <Link href="/battle" legacyBehavior>
+          <button onClick={createRoom} className={styles.createRoomButton}>
+            部屋を作成
+          </button>
+        </Link>
+      )}
       {room && (
         <Link href="/battle" legacyBehavior>
           <button onClick={updateRoom} className={styles.updateRoomButton}>
