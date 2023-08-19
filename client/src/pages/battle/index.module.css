@@ -7,13 +7,13 @@
   min-height: 100vh;
   padding: 0 0.5rem;
   position: relative;
-  background: linear-gradient(
+  /* background: linear-gradient(
     90deg,
     rgba(255, 0, 0, 0.5) var(--black-percentage),
     rgba(0, 0, 255, 0.5) var(--black-percentage),
     rgba(0, 0, 255, 0.5) 100%
-  );
-  transition: background 1s;
+  ); */
+
   animation: backgroundShift 1s forwards;
 }
 
@@ -25,6 +25,7 @@
       rgba(0, 0, 255, 0.5) var(--new-black-percentage),
       rgba(0, 0, 255, 0.5) 100%
     );
+    transition: all 0.5s ease;
   }
 }
 

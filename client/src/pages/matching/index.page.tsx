@@ -53,7 +53,7 @@ const Matching = () => {
   const createRoom = async () => {
     const uuid = uuidv4();
     await apiClient.room.post({
-      body: { roomId: uuid, board, turn, playerId1: user.id, playerId2: null },
+      body: { roomId: uuid, board, turn, playerId1: user.id, playerId2: user.id },
     });
   };
 

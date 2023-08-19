@@ -27,7 +27,7 @@ export const createRoomModel = async (
 };
 
 export const getRoom = async (): Promise<RoomModel | null> => {
-  console.log('1');
+  // console.log('1');
   const prismaRoom = await prismaClient.room.findFirst({
     select: {
       roomId: true,
@@ -37,15 +37,37 @@ export const getRoom = async (): Promise<RoomModel | null> => {
       playerId2: true,
     },
   });
-  console.log('2');
+  // console.log('2');
   if (!prismaRoom) {
     return null;
   }
-  console.log('3');
+  // console.log('3');
   return toRoomModel(prismaRoom);
 };
 
-export const deleteRoom = async (roomId: string): Promise<RoomModel> => {
-  const prismaRoom = await prismaClient.room.delete({ where: { roomId } });
-  return toRoomModel(prismaRoom);
+// export const deleteRoom = async (roomId: string): Promise<RoomModel> => {
+//   console.log('1');
+//   try {
+//     const prismaRoom = await prismaClient.room.delete({ where: { roomId } });
+//     console.log('2');
+//     return toRoomModel(prismaRoom);
+//   } catch (e) {
+//     console.error('Error deleting room:', e.message);
+//     throw e;
+//   }
+// };
+
+export const deleteAllRooms = async (): Promise<void> => {
+  console.log('1');
+  try {
+    await prismaClient.room.deleteMany();
+    console.log('2');
+  } catch (e) {
+    if (e instanceof Error) {
+      console.error('Error deleting all rooms:', e.message);
+    } else {
+      console.error('Error deleting all rooms:', e);
+    }
+    throw e;
+  }
 };
